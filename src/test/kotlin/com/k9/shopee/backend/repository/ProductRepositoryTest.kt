@@ -9,13 +9,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
 @DataJpaTest
-class CategoryRepositoryTest {
+class ProductRepositoryTest {
     @Autowired
-    private lateinit var categoryRepository: CategoryRepository
+    private lateinit var productRepository: ProductRepository
 
     @Test
-    fun `test category repository`() {
-        val categories = categoryRepository.findAll()
-        assertEquals(4, categories.size)
+    fun `test product repository`() {
+        val products = productRepository.findAll()
+        assertEquals(20, products.size)
     }
 }
