@@ -19,20 +19,11 @@ class ProductService(
 
     fun getAllProducts(limit: Optional<Int>, sort: Optional<String>): List<ProductDto> {
         val pageable = PageableUtil.getPageable(limit, sort, productRepository.count().toInt())
-        return this.productRepository.findAll(pageable).map { product ->
-            ProductUtil.getProductDto(product)
-        }.content
+        return this.productRepository.findAll(pageable).map(ProductUtil::getProductDto).content
     }
 
-    fun getProduct(productId: Long): Optional<ProductDto> {
-        val optionalProduct = this.productRepository.findById(productId)
-        return if (optionalProduct.isPresent) {
-            val product = optionalProduct.get()
-            Optional.of(ProductUtil.getProductDto(product))
-        } else {
-            Optional.empty()
-        }
-    }
+    fun getProduct(productId: Long): Optional<ProductDto> =
+        this.productRepository.findById(productId).map(ProductUtil::getProductDto)
 
     fun getProductsByLimit(limit: Int): Page<ProductDto> =
         this.productRepository.findAll(
@@ -42,9 +33,7 @@ class ProductService(
                 productRepository.count().toInt()
             )
         )
-            .map { product ->
-                ProductUtil.getProductDto(product)
-            }
+            .map(ProductUtil::getProductDto)
 
 
     fun addProduct(addProductDto: AddProductDto): Optional<ProductDto> {

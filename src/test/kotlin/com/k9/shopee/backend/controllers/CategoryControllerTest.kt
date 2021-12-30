@@ -1,6 +1,6 @@
 package com.k9.shopee.backend.controllers
 
-import com.k9.shopee.backend.dtos.CategoryDto
+import com.k9.shopee.backend.dtos.category.CategoryDto
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
@@ -29,5 +29,10 @@ internal class CategoryControllerTest(@Autowired val restTemplate: TestRestTempl
         val categoryDto = result.body
         assertNotNull(categoryDto)
         assertEquals(categoryDto?.id, 1)
+    }
+
+    @Test
+    fun deleteCategory() {
+        restTemplate.delete("/products/categories/1")
     }
 }

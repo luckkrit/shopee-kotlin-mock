@@ -25,13 +25,10 @@ class UserService(
                 sort,
                 userRepository.count().toInt()
             )
-        ).content.map { user -> UserUtil.getUserDto(user) }
+        ).content.map(UserUtil::getUserDto)
     }
 
-    fun getUser(userId: Long): Optional<UserDto> {
-        val optionalUser = userRepository.findById(userId)
-        return if (optionalUser.isPresent) Optional.of(UserUtil.getUserDto(optionalUser.get())) else Optional.empty()
-    }
+    fun getUser(userId: Long): Optional<UserDto> = this.userRepository.findById(userId).map(UserUtil::getUserDto)
 
     fun addUser(addUserDto: AddUserDto): Optional<UserDto> {
         if (addUserDto.address == null || addUserDto.name == null) return Optional.empty()

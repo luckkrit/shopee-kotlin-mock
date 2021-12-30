@@ -1,4 +1,4 @@
-package com.k9.shopee.backend.dtos
+package com.k9.shopee.backend.dtos.category
 
 import java.io.Serializable
 
