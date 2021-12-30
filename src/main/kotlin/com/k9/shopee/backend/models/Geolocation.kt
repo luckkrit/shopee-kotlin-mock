@@ -12,8 +12,8 @@ open class Geolocation {
     open var id: Long? = null
 
     @Column(name = "latitude")
-    open var latitude: Long? = null
+    open var latitude: Float? = null
 
-    @Column(name = "longtitude")
-    open var longtitude: Long? = null
+    @Column(name = "longitude")
+    open var longitude: Float? = null
 }

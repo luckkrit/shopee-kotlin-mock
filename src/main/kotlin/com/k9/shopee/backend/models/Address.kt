@@ -30,4 +30,5 @@ open class Address {
 
     @Column(name = "street")
     open var street: String? = null
+
 }

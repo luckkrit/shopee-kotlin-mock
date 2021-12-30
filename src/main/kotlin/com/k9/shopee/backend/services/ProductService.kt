@@ -5,8 +5,8 @@ import com.k9.shopee.backend.dtos.ProductDto
 import com.k9.shopee.backend.dtos.UpdateProductDto
 import com.k9.shopee.backend.repository.CategoryRepository
 import com.k9.shopee.backend.repository.ProductRepository
-import com.k9.shopee.backend.utils.EntityUtil
 import com.k9.shopee.backend.utils.PageableUtil
+import com.k9.shopee.backend.utils.ProductUtil
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import java.util.*
@@ -20,7 +20,7 @@ class ProductService(
     fun getAllProducts(limit: Optional<Int>, sort: Optional<String>): List<ProductDto> {
         val pageable = PageableUtil.getPageable(limit, sort, productRepository.count().toInt())
         return this.productRepository.findAll(pageable).map { product ->
-            EntityUtil.getProductDto(product)
+            ProductUtil.getProductDto(product)
         }.content
     }
 
@@ -28,7 +28,7 @@ class ProductService(
         val optionalProduct = this.productRepository.findById(productId)
         return if (optionalProduct.isPresent) {
             val product = optionalProduct.get()
-            Optional.of(EntityUtil.getProductDto(product))
+            Optional.of(ProductUtil.getProductDto(product))
         } else {
             Optional.empty()
         }
@@ -43,7 +43,7 @@ class ProductService(
             )
         )
             .map { product ->
-                EntityUtil.getProductDto(product)
+                ProductUtil.getProductDto(product)
             }
 
 
@@ -51,9 +51,9 @@ class ProductService(
         if (addProductDto.categoryId == null) return Optional.empty()
         val optionalCategory = this.categoryRepository.findById(addProductDto.categoryId)
         return if (optionalCategory.isPresent) {
-            val product = EntityUtil.createProduct(addProductDto, optionalCategory.get())
+            val product = ProductUtil.createProduct(addProductDto, optionalCategory.get())
             val saveProduct = this.productRepository.save(product)
-            val productDto = EntityUtil.getProductDto(saveProduct)
+            val productDto = ProductUtil.getProductDto(saveProduct)
             Optional.of(productDto)
         } else Optional.empty()
     }
@@ -63,9 +63,9 @@ class ProductService(
         val optionalCategory = this.categoryRepository.findById(updateProductDto.categoryId)
         val optionalProduct = this.productRepository.findById(productId)
         return if (optionalCategory.isPresent && optionalProduct.isPresent) {
-            val product = EntityUtil.updateProduct(optionalProduct.get(), updateProductDto, optionalCategory.get())
+            val product = ProductUtil.updateProduct(optionalProduct.get(), updateProductDto, optionalCategory.get())
             val saveProduct = this.productRepository.save(product)
-            val productDto = EntityUtil.getProductDto(saveProduct)
+            val productDto = ProductUtil.getProductDto(saveProduct)
             Optional.of(productDto)
         } else Optional.empty()
     }
@@ -74,7 +74,7 @@ class ProductService(
         val optionalProduct = this.productRepository.findById(productId)
         return if (optionalProduct.isPresent) {
             val product = optionalProduct.get()
-            val productDto = EntityUtil.getProductDto(product)
+            val productDto = ProductUtil.getProductDto(product)
             this.productRepository.delete(product)
             Optional.of(productDto)
         } else Optional.empty()

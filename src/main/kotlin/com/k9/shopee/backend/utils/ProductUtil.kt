@@ -6,7 +6,7 @@ import com.k9.shopee.backend.dtos.UpdateProductDto
 import com.k9.shopee.backend.models.Category
 import com.k9.shopee.backend.models.Product
 
-object EntityUtil {
+object ProductUtil {
     fun getProductDto(product: Product): ProductDto = ProductDto(
         id = product.id,
         category = product.category?.title,
