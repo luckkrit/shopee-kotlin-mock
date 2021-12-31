@@ -2,8 +2,10 @@ package com.k9.shopee.backend.services
 
 import com.k9.shopee.backend.dtos.user.*
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestMethodOrder
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -12,6 +14,7 @@ import java.util.*
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 internal class UserServiceTest {
     @Autowired
     private lateinit var userService: UserService
