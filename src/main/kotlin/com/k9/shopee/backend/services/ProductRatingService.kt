@@ -25,4 +25,21 @@ class ProductRatingService(
             Optional.empty()
         }
     }
+
+    fun updateProductRating(productId: Long, productRatingDto: ProductRatingDto): Optional<ProductRatingDto> {
+        val optionalProduct = productRepository.findById(productId)
+        return if (optionalProduct.isPresent) {
+            val product = optionalProduct.get()
+            var productRating = product.productRating
+            productRating = if (productRating != null) {
+                ProductRatingUtil.updateProductRating(productRating, productRatingDto)
+            } else {
+                ProductRatingUtil.createProductRating(productRatingDto)
+            }
+            productRatingRepository.save(productRating)
+            Optional.of(productRatingDto)
+        } else {
+            Optional.empty()
+        }
+    }
 }

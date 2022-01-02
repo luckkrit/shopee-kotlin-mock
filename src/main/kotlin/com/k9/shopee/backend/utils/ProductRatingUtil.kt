@@ -13,4 +13,10 @@ object ProductRatingUtil {
 
     fun getProductDto(productRating: ProductRating): ProductRatingDto =
         ProductRatingDto(rate = productRating.rate, count = productRating.count)
+
+    fun updateProductRating(productRating: ProductRating, productRatingDto: ProductRatingDto): ProductRating {
+        productRating.count = productRatingDto.count
+        productRating.rate = productRatingDto.rate
+        return productRating
+    }
 }
