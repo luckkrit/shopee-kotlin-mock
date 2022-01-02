@@ -88,16 +88,16 @@ class UserService(
         val optionalUser = userRepository.findById(userId)
         return if (optionalUser.isPresent) {
             val user = optionalUser.get()
+            this.userRepository.delete(user)
             if (user.address != null) {
+                this.addressRepository.delete(user.address!!)
                 if (user.address?.geolocation != null) {
                     this.geolocationRepository.delete(user.address?.geolocation!!)
                 }
-                this.addressRepository.delete(user.address!!)
             }
             if (user.userDetail != null) {
                 this.userDetailRepository.delete(user.userDetail!!)
             }
-            this.userRepository.delete(user)
             Optional.of(UserUtil.getUserDto(user))
         } else {
             Optional.empty()
