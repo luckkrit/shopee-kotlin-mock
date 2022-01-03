@@ -42,7 +42,7 @@ class CategoryController(private val categoryService: CategoryService) {
         return if (optionalCategory.isPresent) ResponseEntity.noContent().build() else ResponseEntity.notFound().build()
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     fun patchCategory(@PathVariable id: Long, updateCategoryDto: UpdateCategoryDto): ResponseEntity<Any> {
         val optionalCategory = this.categoryService.updateCategory(id, updateCategoryDto)
         return if (optionalCategory.isPresent) ResponseEntity.noContent().build() else ResponseEntity.notFound().build()
