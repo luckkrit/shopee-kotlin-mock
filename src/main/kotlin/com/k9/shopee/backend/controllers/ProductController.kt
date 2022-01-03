@@ -27,7 +27,7 @@ class ProductController(private val productService: ProductService) {
     }
 
     @PostMapping
-    fun postProduct(@RequestBody addProductDto: AddProductDto): ResponseEntity<ProductDto> {
+    fun postProduct(@RequestBody addProductDto: AddProductDto): ResponseEntity<Any> {
         val optionalProductDto = productService.addProduct(addProductDto)
         return if (optionalProductDto.isPresent) ResponseEntity.created(URI.create("/products/${optionalProductDto.get().id}"))
             .build() else ResponseEntity.notFound()
